@@ -1,0 +1,574 @@
+{
+	"info": {
+		"_postman_id": "9e5df4d1-574e-4aaf-b01a-f52f62dfa367",
+		"name": "Juice tests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "962264"
+	},
+	"item": [
+		{
+			"name": "Add an item to basket",
+			"item": [
+				{
+					"name": "login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let responseData=pm.response.json();",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"// console.log(responseData);",
+									"const token=responseData.authentication.token",
+									"pm.environment.set(\"token\",token );",
+									"console.log(token)",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "authority",
+								"value": "juice-shop.guardrails.ai"
+							},
+							{
+								"key": "accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "accept-language",
+								"value": "en-US,en;q=0.9"
+							},
+							{
+								"key": "content-type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"covidisover1@mailinator.com\",\n    \"password\": \"Aa12345678\"\n}"
+						},
+						"url": {
+							"raw": "{{base_URL}}rest/user/login",
+							"host": [
+								"{{base_URL}}rest"
+							],
+							"path": [
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add item to basket",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "authority",
+								"value": "juice-shop.guardrails.ai"
+							},
+							{
+								"key": "accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "authorization",
+								"value": "Bearer {{token}}"
+							},
+							{
+								"key": "content-type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"ProductId\": {{product_id1}},\n    \"BasketId\": \"6\",\n    \"quantity\": 1\n}\n"
+						},
+						"url": {
+							"raw": "{{base_URL}}api/BasketItems/",
+							"host": [
+								"{{base_URL}}api"
+							],
+							"path": [
+								"BasketItems",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get items in basket",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Request return successfully\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"success\");",
+									"});",
+									"var jsonData = pm.response.json();",
+									"pm.test(\"Verify item is added to basket\", function () { ",
+									"    console.log(jsonData.status)",
+									"    console.log(jsonData.data.Products[0].BasketItem.ProductId)",
+									"    pm.expect(jsonData.data.Products[0].BasketItem.ProductId).to.eql(parseInt(pm.environment.get(\"product_id1\")));",
+									"});",
+									"const product1_basket_id=jsonData.data.Products[0].BasketItem.id",
+									"pm.environment.set(\"product1_basket_id\", product1_basket_id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "authorization",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJzdGF0dXMiOiJzdWNjZXNzIiwiZGF0YSI6eyJpZCI6MjEsInVzZXJuYW1lIjoiIiwiZW1haWwiOiJjb3ZpZGlzb3ZlcjFAbWFpbGluYXRvci5jb20iLCJwYXNzd29yZCI6ImI5NTQ5NWQyYjY1NWUwY2Q4MzIyNDQ0MjcyNjFiNzZhIiwicm9sZSI6ImN1c3RvbWVyIiwiZGVsdXhlVG9rZW4iOiIiLCJsYXN0TG9naW5JcCI6InVuZGVmaW5lZCIsInByb2ZpbGVJbWFnZSI6Ii9hc3NldHMvcHVibGljL2ltYWdlcy91cGxvYWRzL2RlZmF1bHQuc3ZnIiwidG90cFNlY3JldCI6IiIsImlzQWN0aXZlIjp0cnVlLCJjcmVhdGVkQXQiOiIyMDIyLTEwLTI1IDA2OjQ4OjE4LjQ1MiArMDA6MDAiLCJ1cGRhdGVkQXQiOiIyMDIyLTEwLTI1IDA2OjQ4OjMxLjU4NCArMDA6MDAiLCJkZWxldGVkQXQiOm51bGx9LCJpYXQiOjE2NjY5NTIwOTcsImV4cCI6MTY2Njk3MDA5N30.flUl3z1eZx9ui1D5ndqQpjoN9HTwEhvLSgmJF2sh4lQuiK_mmIaPu0WhNMrYevqSA_21K-0_dPm-VD3NyRpgV-VCVHnr3oYB7mjrgI7PsqH_6Z_B7c26OlPe5LOrIIWyfy7_49Vn19NYRBzhhl4v7hTQYxX7vCS4DCzyboDtsns"
+							}
+						],
+						"url": {
+							"raw": "https://juice-shop.guardrails.ai/rest/basket/6",
+							"protocol": "https",
+							"host": [
+								"juice-shop",
+								"guardrails",
+								"ai"
+							],
+							"path": [
+								"rest",
+								"basket",
+								"6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete item from basket",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "authority",
+								"value": "juice-shop.guardrails.ai"
+							},
+							{
+								"key": "accept-language",
+								"value": "en-US,en;q=0.9"
+							},
+							{
+								"key": "authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "https://juice-shop.guardrails.ai/api/BasketItems/{{product1_basket_id}}",
+							"protocol": "https",
+							"host": [
+								"juice-shop",
+								"guardrails",
+								"ai"
+							],
+							"path": [
+								"api",
+								"BasketItems",
+								"{{product1_basket_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Add 2 items to basket",
+			"item": [
+				{
+					"name": "login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let responseData=pm.response.json();",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"// console.log(responseData);",
+									"const token=responseData.authentication.token",
+									"pm.environment.set(\"token\",token );",
+									"console.log(token)",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "authority",
+								"value": "juice-shop.guardrails.ai"
+							},
+							{
+								"key": "accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "accept-language",
+								"value": "en-US,en;q=0.9"
+							},
+							{
+								"key": "content-type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"covidisover1@mailinator.com\",\n    \"password\": \"Aa12345678\"\n}"
+						},
+						"url": {
+							"raw": "{{base_URL}}rest/user/login",
+							"host": [
+								"{{base_URL}}rest"
+							],
+							"path": [
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add 1st item to basket",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "authority",
+								"value": "juice-shop.guardrails.ai"
+							},
+							{
+								"key": "accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "authorization",
+								"value": "Bearer {{token}}"
+							},
+							{
+								"key": "content-type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"ProductId\": {{product_id1}},\n    \"BasketId\": \"6\",\n    \"quantity\": 1\n}\n"
+						},
+						"url": {
+							"raw": "{{base_URL}}api/BasketItems/",
+							"host": [
+								"{{base_URL}}api"
+							],
+							"path": [
+								"BasketItems",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add 2nd item to basket",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "authority",
+								"value": "juice-shop.guardrails.ai"
+							},
+							{
+								"key": "accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "authorization",
+								"value": "Bearer {{token}}"
+							},
+							{
+								"key": "content-type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"ProductId\": {{product_id2}},\n    \"BasketId\": \"6\",\n    \"quantity\": 1\n}\n"
+						},
+						"url": {
+							"raw": "{{base_URL}}api/BasketItems/",
+							"host": [
+								"{{base_URL}}api"
+							],
+							"path": [
+								"BasketItems",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get items in basket",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Request return successfully\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"success\");",
+									"});",
+									"var jsonData = pm.response.json();",
+									"pm.test(\"Verify item is added to basket\", function () { ",
+									"    console.log(jsonData.status)",
+									"    console.log(jsonData.data.Products[0].id)",
+									"    pm.expect(jsonData.data.Products[0].BasketItem.ProductId).to.eql(parseInt(pm.environment.get(\"product_id1\")));",
+									"});",
+									"const product1_basket_id=jsonData.data.Products[0].BasketItem.id",
+									"pm.environment.set(\"product1_basket_id\", product1_basket_id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "authorization",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJzdGF0dXMiOiJzdWNjZXNzIiwiZGF0YSI6eyJpZCI6MjEsInVzZXJuYW1lIjoiIiwiZW1haWwiOiJjb3ZpZGlzb3ZlcjFAbWFpbGluYXRvci5jb20iLCJwYXNzd29yZCI6ImI5NTQ5NWQyYjY1NWUwY2Q4MzIyNDQ0MjcyNjFiNzZhIiwicm9sZSI6ImN1c3RvbWVyIiwiZGVsdXhlVG9rZW4iOiIiLCJsYXN0TG9naW5JcCI6InVuZGVmaW5lZCIsInByb2ZpbGVJbWFnZSI6Ii9hc3NldHMvcHVibGljL2ltYWdlcy91cGxvYWRzL2RlZmF1bHQuc3ZnIiwidG90cFNlY3JldCI6IiIsImlzQWN0aXZlIjp0cnVlLCJjcmVhdGVkQXQiOiIyMDIyLTEwLTI1IDA2OjQ4OjE4LjQ1MiArMDA6MDAiLCJ1cGRhdGVkQXQiOiIyMDIyLTEwLTI1IDA2OjQ4OjMxLjU4NCArMDA6MDAiLCJkZWxldGVkQXQiOm51bGx9LCJpYXQiOjE2NjY5NTIwOTcsImV4cCI6MTY2Njk3MDA5N30.flUl3z1eZx9ui1D5ndqQpjoN9HTwEhvLSgmJF2sh4lQuiK_mmIaPu0WhNMrYevqSA_21K-0_dPm-VD3NyRpgV-VCVHnr3oYB7mjrgI7PsqH_6Z_B7c26OlPe5LOrIIWyfy7_49Vn19NYRBzhhl4v7hTQYxX7vCS4DCzyboDtsns"
+							}
+						],
+						"url": {
+							"raw": "https://juice-shop.guardrails.ai/rest/basket/6",
+							"protocol": "https",
+							"host": [
+								"juice-shop",
+								"guardrails",
+								"ai"
+							],
+							"path": [
+								"rest",
+								"basket",
+								"6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete item from basket",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "authority",
+								"value": "juice-shop.guardrails.ai"
+							},
+							{
+								"key": "accept-language",
+								"value": "en-US,en;q=0.9"
+							},
+							{
+								"key": "authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "https://juice-shop.guardrails.ai/api/BasketItems/{{product1_basket_id}}",
+							"protocol": "https",
+							"host": [
+								"juice-shop",
+								"guardrails",
+								"ai"
+							],
+							"path": [
+								"api",
+								"BasketItems",
+								"{{product1_basket_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Check items in basket after deleting",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Request return successfully\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"success\");",
+									"});",
+									"var jsonData = pm.response.json();",
+									"const product2_basket_id=jsonData.data.Products[0].BasketItem.id",
+									"pm.test(\"Verify there is a item in basket\", function () { ",
+									"    console.log(jsonData.status)",
+									"    console.log(jsonData.data.Products[0].BasketItem.ProductId)",
+									"    pm.expect(jsonData.data.Products[0].BasketItem.ProductId).to.eql(parseInt(pm.environment.get(\"product_id2\")));",
+									"});",
+									"",
+									"pm.test(\"Verify there is only one item in basket\", function () {",
+									"    var product_number = pm.response.json().data.Products.length;",
+									"    console.log(product_number) ",
+									"    pm.expect(product_number).to.equal(1);",
+									"});",
+									"",
+									"pm.environment.set(\"product2_basket_id\", product2_basket_id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "authorization",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJzdGF0dXMiOiJzdWNjZXNzIiwiZGF0YSI6eyJpZCI6MjEsInVzZXJuYW1lIjoiIiwiZW1haWwiOiJjb3ZpZGlzb3ZlcjFAbWFpbGluYXRvci5jb20iLCJwYXNzd29yZCI6ImI5NTQ5NWQyYjY1NWUwY2Q4MzIyNDQ0MjcyNjFiNzZhIiwicm9sZSI6ImN1c3RvbWVyIiwiZGVsdXhlVG9rZW4iOiIiLCJsYXN0TG9naW5JcCI6InVuZGVmaW5lZCIsInByb2ZpbGVJbWFnZSI6Ii9hc3NldHMvcHVibGljL2ltYWdlcy91cGxvYWRzL2RlZmF1bHQuc3ZnIiwidG90cFNlY3JldCI6IiIsImlzQWN0aXZlIjp0cnVlLCJjcmVhdGVkQXQiOiIyMDIyLTEwLTI1IDA2OjQ4OjE4LjQ1MiArMDA6MDAiLCJ1cGRhdGVkQXQiOiIyMDIyLTEwLTI1IDA2OjQ4OjMxLjU4NCArMDA6MDAiLCJkZWxldGVkQXQiOm51bGx9LCJpYXQiOjE2NjY5NTIwOTcsImV4cCI6MTY2Njk3MDA5N30.flUl3z1eZx9ui1D5ndqQpjoN9HTwEhvLSgmJF2sh4lQuiK_mmIaPu0WhNMrYevqSA_21K-0_dPm-VD3NyRpgV-VCVHnr3oYB7mjrgI7PsqH_6Z_B7c26OlPe5LOrIIWyfy7_49Vn19NYRBzhhl4v7hTQYxX7vCS4DCzyboDtsns"
+							}
+						],
+						"url": {
+							"raw": "https://juice-shop.guardrails.ai/rest/basket/6",
+							"protocol": "https",
+							"host": [
+								"juice-shop",
+								"guardrails",
+								"ai"
+							],
+							"path": [
+								"rest",
+								"basket",
+								"6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete last item in basket",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "authority",
+								"value": "juice-shop.guardrails.ai"
+							},
+							{
+								"key": "accept-language",
+								"value": "en-US,en;q=0.9"
+							},
+							{
+								"key": "authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "https://juice-shop.guardrails.ai/api/BasketItems/{{product2_basket_id}}",
+							"protocol": "https",
+							"host": [
+								"juice-shop",
+								"guardrails",
+								"ai"
+							],
+							"path": [
+								"api",
+								"BasketItems",
+								"{{product2_basket_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

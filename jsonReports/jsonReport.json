@@ -1,0 +1,224 @@
+{
+  "config": {
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {},
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/nguyetnguyen/AutoTest/LearnPlayWright/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/nguyetnguyen/AutoTest/LearnPlayWright/testcases",
+        "testIgnore": [],
+        "testMatch": [
+          "**/?(*.)@(spec|test).*"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "reporter": [
+      [
+        "dot",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "jsonReports/jsonReport.json"
+        }
+      ],
+      [
+        "html",
+        {
+          "open": "never"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 15000
+    },
+    "configFile": "/Users/nguyetnguyen/AutoTest/LearnPlayWright/playwright.config.ts",
+    "rootDir": "/Users/nguyetnguyen/AutoTest/LearnPlayWright/testcases",
+    "quiet": false,
+    "shard": null,
+    "updateSnapshots": "missing",
+    "version": "1.27.1",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "addItemToCart.test.ts",
+      "file": "addItemToCart.test.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "add to cart test suite",
+          "file": "addItemToCart.test.ts",
+          "line": 4,
+          "column": 6,
+          "specs": [
+            {
+              "title": "add 1 item to cart test 01",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "status": "timedOut",
+                      "duration": 30000,
+                      "error": {
+                        "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                      },
+                      "errors": [
+                        {
+                          "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                        }
+                      ],
+                      "stdout": [
+                        {
+                          "text": "\u001b[33m0\u001b[39m\n"
+                        },
+                        {
+                          "text": "\u001b[33m1\u001b[39m\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2022-10-29T02:21:45.485Z",
+                      "attachments": [
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/Users/nguyetnguyen/AutoTest/LearnPlayWright/test-results/addItemToCart-add-to-cart-test-suite-add-1-item-to-cart-test-01-chromium/video.webm"
+                        },
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "/Users/nguyetnguyen/AutoTest/LearnPlayWright/test-results/addItemToCart-add-to-cart-test-suite-add-1-item-to-cart-test-01-chromium/test-failed-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "50f225558db095af68b2-60fe7590751eb7eb8871",
+              "file": "addItemToCart.test.ts",
+              "line": 18,
+              "column": 5
+            },
+            {
+              "title": "add 2 item to cart test 02",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "status": "passed",
+                      "duration": 17043,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "\u001b[33m2\u001b[39m\n"
+                        },
+                        {
+                          "text": "\u001b[33m1\u001b[39m\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2022-10-29T02:22:25.123Z",
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "50f225558db095af68b2-b35c9ed68be8e7158c44",
+              "file": "addItemToCart.test.ts",
+              "line": 27,
+              "column": 5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "searchItemInList.test.ts",
+      "file": "searchItemInList.test.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "search for a term",
+          "file": "searchItemInList.test.ts",
+          "line": 3,
+          "column": 6,
+          "specs": [
+            {
+              "title": "search for apple test 01",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "status": "passed",
+                      "duration": 4620,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2022-10-29T02:22:42.508Z",
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "59f3a7e889af26715cde-bcdf7bd4576f33da1d75",
+              "file": "searchItemInList.test.ts",
+              "line": 4,
+              "column": 5
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": []
+}

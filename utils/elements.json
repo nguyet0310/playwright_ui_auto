@@ -1,0 +1,15 @@
+{
+    "email": "#email",
+    "password": "#password",
+    "submit_btn": "#submitButton",
+    "address_country_txt": "//*[text()='Country']/../../../input",
+    "address_name_txt": "//*[text()='Name']/../../../input",
+    "address_mobile_txt": "//*[text()='Mobile Number']/../../../input",
+    "address_zipcode_txt": "//*[text()='ZIP Code']/../../../input",
+    "address_add_txt": "#address",
+    "address_city_txt": "//*[text()='City']/../../../input",
+    "ur_basket_btn": "//span[contains(text(),'Your Basket')]",
+    "trash_icon": "//*[@data-icon='trash-alt']",
+    "search_ico": "#searchQuery",
+    "search_txt": ".mat-search_field"
+}
