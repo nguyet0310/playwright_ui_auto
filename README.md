@@ -6,7 +6,7 @@
 - There are 3 tests to run in 1 worker
 - The `html` test report is located in `playwright-report` folder
 - Videos for tests are shown in test report too
-- The first test is shown that it's fail but actually it's not due to in tear down part, I tried to delete item in basket but basket dat shows very slow, and test script can not find item to delete
+- The first test is shown that it's fail but actually it's not due to in tear down part, I tried to delete item in basket but basket data shows very slow, and test script can not find item to delete
 - For code struture: for UI automation tests, I used POM (Page Object model), this model basic means every page test will consider a model and UI tests will interacti with it. This model will help to avoid duplicate code as well
 - The reason why I'm using Playwright not other automation tools: compare with Selenium, Playwright is faster, it provides auto wait so it will support automation better. Compare with Cypress, Playwright is also better because Cypress is not good when handle new tab, but Playwright can. Another limitation of Cypress is it can not run in Safari but Playwright can.
 - There are some trade off when using Playwright: it can not open maximun windows automatically, we need to set width and height manually. Another big issue is it's new to the market so it takes time to be mature, compare to Selenium this tool is very 'young', so it may contain issues that we are still not aware of
